@@ -5,8 +5,8 @@
 export const environment = {
 	production: false,
 	token_auth_config: {
-		apiBase: 'http://localhost:3000',
-		registerAccountCallback: 'http://localhost:4200/login',
+		apiBase: 'http://39.106.54.201:3000',
+		registerAccountCallback: 'http://39.106.54.201/login',
 	}
 };
 

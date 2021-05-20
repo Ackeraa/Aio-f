@@ -16,7 +16,10 @@ export class ContestsComponent implements OnInit {
 	ngOnInit(): void {
 		this.groupService.contests$
 			.pipe(filter(x => x != null))
-			.subscribe(contests => this.contests = contests);
+			.subscribe(contests =>{
+				console.log(contests);
+				this.contests = contests;
+			});
 	}
 
 }

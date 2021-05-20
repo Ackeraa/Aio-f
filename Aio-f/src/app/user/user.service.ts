@@ -27,6 +27,7 @@ export class UserService {
 			let url = `users/${id}/get_info`;
 			this.authService.get(url)
 				.subscribe(info => {
+					info.user = JSON.parse(info.user);
 					this.homeInfo$.next(info);
 				});
 		} else {
@@ -35,10 +36,10 @@ export class UserService {
 				.pipe(filter(x => x != null))
 				.subscribe(user => {
 					let url = `users/${user.user_id}/get_info`;
+					this.id = user.user_id;
 					this.authService.get(url)
 						.subscribe(info => {
 							this.homeInfo$.next(info);
-							this.id = info.user.id;
 						});
 				});
 		}
@@ -48,7 +49,10 @@ export class UserService {
 		this.contests$.subscribe(contests => {
 			if (contests === null) {
 				let url = `users/${this.id}/get_contests`;
-				this.authService.get(url).subscribe(contests => this.contests$.next(contests));
+				this.authService.get(url).subscribe(contests => {
+					console.log(contests);
+					this.contests$.next(contests);
+				});
 			}
 		});
 	}

@@ -11,7 +11,7 @@ export class RecentComponent implements OnInit {
 	uri: string = 'contests';
 	addition: string = 'recent';
 	loading: boolean;
-	contests: Array<any>;
+	contests: any;
 	p: number;
 	total: number;
 
@@ -22,7 +22,7 @@ export class RecentComponent implements OnInit {
 	}
 
 	setContests(data: any): void {
-		this.contests = data.contests;
+		this.contests = JSON.parse(data.contests);
 		this.contests.map(contest => {
 			let start_day = new Date(contest.start_time).getDay();
 			let end_day = new Date(contest.end_time).getDay();
@@ -40,6 +40,7 @@ export class RecentComponent implements OnInit {
 		this.contestsService.getPage(page)
 			.subscribe(data => {
 				this.contests = data.contests;
+				console.log(data.contests);
 				this.total = data.total;
 				this.p = page;
 			});

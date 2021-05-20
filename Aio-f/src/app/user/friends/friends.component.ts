@@ -18,8 +18,8 @@ export class FriendsComponent implements OnInit {
 		this.userService.friends$
 			.pipe(filter(x => x != null))
 			.subscribe(friends => {
-				this.followers = friends.followers;
-				this.following = friends.following;
+				this.followers = JSON.parse(friends.followers);
+				this.following = JSON.parse(friends.following);
 			});
 	}
 

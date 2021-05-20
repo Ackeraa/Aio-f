@@ -25,6 +25,7 @@ export class GroupService {
 		let url = `groups/${id}/get_info`;
 		this.authService.get(url)
 			.subscribe(info => {
+				info.leader = JSON.parse(info.leader);
 				this.homeInfo$.next(info);
 			});
 	}
@@ -34,7 +35,9 @@ export class GroupService {
 			if (groups === null) {
 				let url = `groups/${this.id}/get_members`;
 				this.authService.get(url)
-					.subscribe(members => this.members$.next(members));
+					.subscribe(members => {
+						this.members$.next(members)
+					});
 			}
 		});
 	}

@@ -25,7 +25,7 @@ export class CollectionComponent implements OnInit {
 	}
 
 	setProblems(data: any): void {
-		this.problems = data.problems;
+		this.problems = JSON.parse(data.problems);
 		this.total = data.total;
 		this.p = 1;
 	}

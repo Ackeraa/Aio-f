@@ -42,7 +42,7 @@ export class SubmissionsComponent implements OnInit {
 	}
 
 	setSubmissions(data: any): void {
-		this.submissions = data.submissions;
+		this.submissions = JSON.parse(data.submissions);
 		this.total = data.total;
 	}
 
