@@ -1,2 +1,0 @@
-class Solution < ApplicationRecord
-end

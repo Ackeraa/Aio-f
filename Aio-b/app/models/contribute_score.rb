@@ -1,2 +1,0 @@
-class ContributeScore < ApplicationRecord
-end
