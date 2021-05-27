@@ -10,6 +10,7 @@ import { SearchService } from '../_services';
 })
 export class ProblemService implements OnInit {
 
+	id: string;
 	problem$: BehaviorSubject<any> = new BehaviorSubject(null);
 
 	constructor(private authService: AuthService,
@@ -21,8 +22,9 @@ export class ProblemService implements OnInit {
 	}
 
 	getProblem(source: string, id: string): void {
+		this.id = id;
 		let url: string;
-		if (source === 'aio') {
+		if (source === 'l') {
 			url = 'problems/' + id;
 		} else {
 			url = 'vproblems/' + id;
@@ -64,4 +66,9 @@ export class ProblemService implements OnInit {
 			);
 	}
 
+	deleteDatas(which: string): Observable<any> {
+		let url = 'problems/delete_' + which;
+		let data = { id: this.id };
+		return this.authService.post(url, data);
+	}
 }

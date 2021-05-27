@@ -1,36 +1,33 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
 	<div class="row">
 		<div class="col-md-4">
 			<label class="form-label"><h5>Title</h5></label>
-			<div *ngIf="name.hasError('required') && name.touched"
-						class="alert alert-danger" role="alert">
-				Title is required.
-			</div>
-			<input type="text" [formControl]="name" class="form-control"/>
+			<input type="text" [formControl]="name" class="form-control"
+					[ngClass]="{ 'is-invalid': (name.touched || submitted) && name.errors }"/>
 		</div>
 		<div class="col-md-4">
 			<label class="form-label"><h5>Time Limit(MS)</h5></label>
-			<div *ngIf="time_limit.hasError('required') && time_limit.touched"
-						class="alert alert-danger" role="alert">
-				Time Limit is required.
+			<input type="text" [formControl]="time_limit" class="form-control"
+					[ngClass]="{ 'is-invalid': (time_limit.touched || submitted) && time_limit.errors }"/>
+			<div *ngIf="time_limit.touched" class="text-danger">
+				<small>
+					<div *ngIf="time_limit.hasError('invalidTimeLimit')">
+						Time Limit should be integer value.
+					</div>
+				</small>
 			</div>
-			<div *ngIf="!time_limit.hasError('required') && time_limit.hasError('invalidTimeLimit')
-					   && time_limit.touched" class="alert alert-danger" role="alert">
-				Time Limit should be integer value.
-			</div>
-			<input type="text" [formControl]="time_limit" class="form-control"/>
 		</div>
 		<div class="col-md-4">
 			<label class="form-label"><h5>Memory Limit(MB)</h5> </label>
-			<div *ngIf="memory_limit.hasError('required') && memory_limit.touched"
-						class="alert alert-danger" role="alert">
-				Memory Limit is required.
+			<input type="text" [formControl]="memory_limit" class="form-control"
+				[ngClass]="{ 'is-invalid': (memory_limit.touched || submitted) && memory_limit.errors }"/>
+			<div *ngIf="memory_limit.touched" class="text-danger">
+				<small>
+					<div *ngIf="memory_limit.hasError('invalidMemoryLimit')">
+						Memory Limit should be integer value.
+					</div>
+				</small>
 			</div>
-			<div *ngIf="!memory_limit.hasError('required') && memory_limit.hasError('invalidMemoryLimit')
-					   && memory_limit.touched" class="alert alert-danger" role="alert">
-				Memory Limit should be integer value.
-			</div>
-			<input type="text" [formControl]="memory_limit" class="form-control"/>
 		</div>
 	</div>
 
@@ -39,13 +36,10 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h3>Description</h3>
-			<div *ngIf="description.hasError('required') && description.touched"
-				 class="alert alert-danger" role="alert">
-				Description is required.
-			</div>
 			<markdown [data]="description.value" katex></markdown>
 			<textarea style="overflow-y:auto; height: 30vh" class="form-control"
-					  [formControl]="description">
+				[formControl]="description"
+				[ngClass]="{ 'is-invalid': (description.touched || submitted) && description.errors }">
 			</textarea>
 		</div>
 	</div>
@@ -53,13 +47,9 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h3>Input</h3>
-			<div *ngIf="input.hasError('required') && input.touched"
-				 class="alert alert-danger" role="alert">
-				Input is required.
-			</div>
 			<markdown [data]="input.value" katex></markdown>
-			<textarea style="overflow-y:auto; height: 15vh" class="form-control"
-					  [formControl]="input">
+			<textarea style="overflow-y:auto; height: 15vh" class="form-control" [formControl]="input"
+				[ngClass]="{ 'is-invalid': (input.touched || submitted) && input.errors }">
 			</textarea>
 		</div>
 	</div>
@@ -67,13 +57,9 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h3>Output</h3>
-			<div *ngIf="output.hasError('required') && output.touched"
-				 class="alert alert-danger" role="alert">
-				Output is required.
-			</div>
 			<markdown [data]="output.value" katex></markdown>
-			<textarea style="overflow-y:auto; height: 15vh" class="form-control"
-					  [formControl]="output">
+			<textarea style="overflow-y:auto; height: 15vh" class="form-control" [formControl]="output"
+				[ngClass]="{ 'is-invalid': (output.touched || submitted) && output.errors }">
 			</textarea>
 		</div>
 	</div>
@@ -89,16 +75,6 @@
 		<div [formGroupName]="i">
 			<div class="row">
 				<div class="col-md-12">
-					<div *ngIf="sample.controls['sample_input'].hasError('required') &&
-								sample.controls['sample_input'].touched"
-								class="alert alert-danger" role="alert">
-						Input sample is required.
-					</div>
-					<div *ngIf="sample.controls['sample_output'].hasError('required') &&
-								sample.controls['sample_output'].touched"
-								class="alert alert-danger" role="alert">
-						Output sample is required.
-					</div>
 					<div class="card-group">
 						<div class="card shadow-sm border-secondary">
 							<div class="card-header bg-transparent border-secondary">
@@ -114,7 +90,10 @@
 							</div>
 							<div class="card-body">
 								<textarea style="overflow-y:auto; height:15vh; border:0"
-										  class="form-control" formControlName="sample_input">
+								    class="form-control" formControlName="sample_input"
+									[ngClass]="{ 'is-invalid': (sample.controls['sample_input'].touched
+									|| submitted) && sample.controls['sample_input'].errors }">
+
 								</textarea>
 							</div>
 						</div>
@@ -133,7 +112,9 @@
 							</div>
 							<div class="card-body">
 								<textarea style="overflow-y:auto; height:15vh; border:0"
-										  class="form-control" formControlName="sample_output">
+								    class="form-control" formControlName="sample_output"
+									[ngClass]="{ 'is-invalid': (sample.controls['sample_output'].touched
+									|| submitted) && sample.controls['sample_output'].errors }">
 								</textarea>
 							</div>
 						</div>
@@ -151,7 +132,7 @@
 			<h3>Hint</h3>
 			<markdown [data]="hint.value" katex></markdown>
 			<textarea style="overflow-y:auto; height: 13vh" class="form-control"
-					  [formControl]="hint">
+					 [formControl]="hint">
 			</textarea>
 		</div>
 	</div>
@@ -206,11 +187,11 @@
 	</div>
 	<br/>
 	<br/>
-	<app-problems-upload (uploadEvent)="setToken($event)"></app-problems-upload>
+	<!--<app-problems-upload (uploadEvent)="setToken($event)"></app-problems-upload>-->
 	<br/>
 
 	<div class="row justify-content-center">
-		<button type="button" class="btn btn-info col-sm-4">
+		<button type="submit" class="btn btn-info col-sm-4">
 			<i class="fas fa-upload"></i> Submit
 		</button>
 	</div>

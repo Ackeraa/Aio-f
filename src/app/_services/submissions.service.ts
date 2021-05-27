@@ -16,7 +16,7 @@ export class SubmissionsService {
 	}
 
 	getSubmissionsChannel(params: any): Observable<any> {
-		let url = 'ws://127.0.0.1:3000/cable';
+		let url = 'ws://39.106.54.201:3000/cable';
 		let channel = 'SubmissionsChannel';
 		return this.cableService
 		   .cable(url, params)

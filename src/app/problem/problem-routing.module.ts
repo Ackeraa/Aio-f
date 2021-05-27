@@ -7,7 +7,8 @@ import {
 	MySubmissionsComponent, 
 	SolutionsComponent, 
 	SubmissionsComponent, 
-	SubmitComponent
+	SubmitComponent,
+	UploadComponent
 } from '.';
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
 			{ path: 'my-submissions', component: MySubmissionsComponent }, 
 			{ path: 'solutions', component: SolutionsComponent },
 			{ path: 'submissions', component: SubmissionsComponent }, 
-			{ path: 'submit', component: SubmitComponent }
+			{ path: 'submit', component: SubmitComponent },
+			{ path: 'upload', component: UploadComponent }
 		]
 	},
 ];

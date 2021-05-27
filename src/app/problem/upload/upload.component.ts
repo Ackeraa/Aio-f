@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FileUploader } from 'ng2-file-upload';
+import { ProblemService } from '../problem.service';
 
 const BASE_URL = 'http://39.106.54.201:3000';
 
@@ -12,7 +13,6 @@ const BASE_URL = 'http://39.106.54.201:3000';
 
 export class UploadComponent implements OnInit {
 
-	@Output() uploadEvent = new EventEmitter<string>();
 	@ViewChild('templateInput', { static: true }) templateInput: ElementRef;
 	@ViewChild('spjInput', { static: true }) spjInput: ElementRef;
 	@ViewChild('dataInput', { static: true }) dataInput: ElementRef;
@@ -20,11 +20,13 @@ export class UploadComponent implements OnInit {
 	template: FileUploader;
 	spj: FileUploader;
 	data: FileUploader;
-	token: string;
+	id: string;
 
-	constructor (private http: HttpClient){
-		this.token = '';
+	constructor (private http: HttpClient,
+				 private problemService: ProblemService){
+	}
 
+	ngOnInit(): void {
 		this.template = new FileUploader({
 			url: BASE_URL + '/problems/upload_template',
 			itemAlias: 'template',
@@ -32,15 +34,6 @@ export class UploadComponent implements OnInit {
 		this.template.onBeforeUploadItem = (item) => {
 			item.withCredentials = false;
 		}
-		this.template.onBuildItemForm = (fileItem: any, form: any) => {
-			form.append('token' , this.token);
-		};
-		this.template.onCompleteItem = (item: any, response: any, status: any, headers:any)=>  {
-			console.log(response);
-			if (status == 200) {
-				this.token = response;
-			}
-		};
 		this.template.onAfterAddingFile = () => {
 			this.templateInput.nativeElement.value = '';
 		}
@@ -52,14 +45,6 @@ export class UploadComponent implements OnInit {
 		this.spj.onBeforeUploadItem = (item) => {
 			item.withCredentials = false;
 		}
-		this.spj.onBuildItemForm = (fileItem: any, form: any) => {
-			form.append('token' , this.token);
-		};
-		this.spj.onCompleteItem = (item: any, response: any, status: any, headers:any)=>  {
-			if (status == 200) {
-				this.token = response;
-			}
-		};
 		this.spj.onAfterAddingFile = () => {
 			this.spjInput.nativeElement.value = '';
 		}
@@ -71,18 +56,20 @@ export class UploadComponent implements OnInit {
 		this.data.onBeforeUploadItem = (item) => {
 			item.withCredentials = false;
 		}
-		this.data.onBuildItemForm = (fileItem: any, form: any) => {
-			form.append('token' , this.token);
-		};
-		this.data.onCompleteItem = (item: any, response: any, status: any, headers:any)=>  {
-			if (status == 200) {
-				this.token = response;
-				this.uploadEvent.emit(this.token);
-			}
-		};
 		this.data.onAfterAddingFile = () => {
 			this.dataInput.nativeElement.value = '';
 		}
+
+		let id = this.problemService.id;
+		this.template.onBuildItemForm = (fileItem: any, form: any) => {
+			form.append('id', id);
+		};
+		this.spj.onBuildItemForm = (fileItem: any, form: any) => {
+			form.append('id', id);
+		};
+		this.data.onBuildItemForm = (fileItem: any, form: any) => {
+			form.append('id', id);
+		};
 	}
 
 	onTemplateChange() {
@@ -90,14 +77,10 @@ export class UploadComponent implements OnInit {
 			this.template.removeFromQueue(this.template.queue[0]);
 		}
 	}
+
 	onTemplateRemove() {
 		if (this.template.queue[0].isUploaded){
-			let url = BASE_URL + '/problems/delete_template';
-			this.http.post<any>(url, { token: this.token })
-				.subscribe( data => {
-					console.log(data);
-				}
-			)
+			this.problemService.deleteDatas('template');
 		} else {
 
 		}
@@ -109,14 +92,10 @@ export class UploadComponent implements OnInit {
 			this.spj.removeFromQueue(this.spj.queue[0]);
 		}
 	}
+
 	onSpjRemove() {
 		if (this.spj.queue[0].isUploaded){
-			let url = BASE_URL + '/problems/delete_spj';
-			this.http.post<any>(url, { token: this.token })
-				.subscribe( data => {
-					console.log(data);
-				}
-			)
+			this.problemService.deleteDatas('spj');
 		} else {
 
 		}
@@ -128,22 +107,14 @@ export class UploadComponent implements OnInit {
 			this.data.removeFromQueue(this.data.queue[0]);
 		}
 	}
+
 	onDataRemove() {
 		if (this.data.queue[0].isUploaded){
-			let url = BASE_URL + '/problems/delete_data';
-			this.http.post<any>(url, { token: this.token })
-				.subscribe( data => {
-					console.log(data);
-				}
-			)
+			this.problemService.deleteDatas('data');
 		} else {
 
 		}
-
 		this.data.queue[0].remove();
 	}
 
-	ngOnInit(): void {
-
-	}
 }

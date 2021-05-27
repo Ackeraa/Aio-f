@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FileUploadModule } from 'ng2-file-upload';
 import { CommonModule } from '@angular/common';
 import { MarkdownModule } from 'ngx-markdown';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
@@ -16,7 +17,8 @@ import {
 	MySubmissionsComponent,
 	SolutionsComponent,
 	SubmissionsComponent,
-	SubmitComponent
+	SubmitComponent,
+	UploadComponent
 } from '.';
 
 @NgModule({
@@ -26,12 +28,14 @@ import {
 		MySubmissionsComponent,
 		SolutionsComponent,
 		SubmissionsComponent,
-		SubmitComponent
+		SubmitComponent,
+		UploadComponent
 	],
 	imports: [
 		CommonModule,
         HttpClientModule,
 		FormsModule,
+		FileUploadModule,
 		CodemirrorModule,
 		ProblemRoutingModule,
 		NgxPaginationModule,

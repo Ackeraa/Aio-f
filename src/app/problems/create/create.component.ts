@@ -1,6 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { Response } from '@angular/http';
 import { map } from 'rxjs/operators'; 
@@ -13,8 +12,7 @@ import {
 	AbstractControl,
 	FormControl
 } from '@angular/forms';
-
-const BASE_URL = 'http://127.0.0.1:3000';
+import { ProblemsService } from '../problems.service';
 
 @Component({
 	selector: 'app-problems-create',
@@ -38,14 +36,17 @@ export class CreateComponent implements OnInit {
 	is_visible: boolean;
 	languages: Array<string>;
 	allowed_languages: Array<string>;
-	token: string;
+
+	submitted: boolean;
 
 	private routeSub:any;
 
-	constructor(private fb: FormBuilder, private renderer: Renderer2,
-				private router: Router, private http: HttpClient) { 
-
+	constructor(private router: Router, 
+				private fb: FormBuilder,
+				private renderer: Renderer2,
+			    private problemsService: ProblemsService) { 
 	}
+
 	ngOnInit(): void {
 		this.form = this.fb.group({
 			name: ['', Validators.compose([Validators.required,
@@ -58,7 +59,7 @@ export class CreateComponent implements OnInit {
 			input:  ['', Validators.required],
 			output:  ['', Validators.required],
 			samples: this.fb.array([this.createSample()]),
-			hint:  ['', Validators.required],
+			hint:  [''],
 		});
 
 		this.name = this.form.controls['name'];
@@ -75,47 +76,41 @@ export class CreateComponent implements OnInit {
 		this.is_visible = null;
 		this.languages = ['C', 'Cpp', 'Java', 'Python'];
 		this.allowed_languages = ['C', 'Cpp', 'Java', 'Python'];
-		this.token = '';
-
-		this.samples.valueChanges.subscribe(
-			(value: any) => {
-			}
-		);
+		this.submitted = false;
 	}
-	// Validators for time_limit.
+
 	timeValidator(time_limit: FormControl): {[s: string]: boolean} {
 		if (!time_limit.value.match(/^[1-9]\d*$/)){
 			return { invalidTimeLimit: true };
 		}
 	}
 
-	// Validators for memory_limit.
 	memoryValidator(memory_limit: FormControl): {[s: string]: boolean} {
 		if (!memory_limit.value.match(/^[1-9]\d*$/)){
 			return { invalidMemoryLimit: true };
 		}
 	}
-	//Sample
+
 	createSample(): FormGroup {
 		return this.fb.group({
 			sample_input: ['', Validators.required],
 			sample_output: ['', Validators.required]
 		});
 	}
+
 	addSample(): void {
 		this.samples.push(this.createSample());
 	}
+
 	removeSample(i: number, sample: any): void {
 		this.samples.removeAt(i);
-		console.log(sample);
 	}
+
 	get sampleControls() {
 		return this.form.get('samples')['controls'];
 	}
 
-	//Tag
 	selectTag(btn: any, tag: string){
-		console.log(btn.class);
 		let index = this.tags.indexOf(tag);
 		if (index == -1){
 			this.tags.push(tag);
@@ -127,16 +122,15 @@ export class CreateComponent implements OnInit {
 			this.renderer.addClass(btn, 'btn-outline-dark');
 		}
 	}
-	//Rule
+
 	selectRule(rule: any) {
 		this.rule_type = rule;
 	}
-	//Visible
+
 	selectVisible(visible: boolean) {
 		this.is_visible = visible;
 	}
 
-	//Language
 	selectLan(check: boolean, lan: string) {
 		if (check) {
 			this.allowed_languages.push(lan);
@@ -145,30 +139,24 @@ export class CreateComponent implements OnInit {
 			this.allowed_languages.splice(index, 1);
 		}
 	}
-	//token
-	setToken(token: string) {
-		this.token = token;
-	}
 
-	onSubmit(form: any): void {
-		if (this.token === '') {
-			
-		} else {
-			let data: any = form
-			data.allowed_languages = this.allowed_languages;
-			data.tags = this.tags;
-			data.token = this.token;
-			data.is_visible = this.is_visible;
-			data.rule_type = this.rule_type;
-			this.http
-				.post(
-					BASE_URL + '/problems',
-					data
-				)
-				.subscribe(data => {
-					console.log(data)
-				});
-		}
+	onSubmit(): void {
+		this.submitted = true;
+		console.log(this.form.invalid);
+        if (this.form.invalid) {
+            return;
+        }
+		let data: any = this.form.value
+		data.allowed_languages = this.allowed_languages;
+		data.tags = this.tags;
+		data.is_visible = this.is_visible;
+		data.rule_type = this.rule_type;
+		data.source = 'aio';
+		this.problemsService.createProblem(data)
+			.subscribe(id => {
+				let url = '/problem/l/' + id + '/upload';
+				this.router.navigate([url]);
+			});
 	}
 
 	ngOnDestroy() {
