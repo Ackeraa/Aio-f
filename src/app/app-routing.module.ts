@@ -69,6 +69,7 @@ const routes: Routes = [
 	},
 	{ path: 'login', component: LoginComponent },
 	{ path: 'register', component: RegisterComponent },
+	{ path: 'wiki', component: WikiComponent },
     //{ path: '**', redirectTo: '' }
 ];
 

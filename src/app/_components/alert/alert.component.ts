@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, interval } from 'rxjs';
 
 import { AlertService } from '../../_services';
 
@@ -10,6 +10,7 @@ import { AlertService } from '../../_services';
 
 export class AlertComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
+	timer: any;
     message: any;
 
     constructor(private alertService: AlertService) { }
@@ -25,12 +26,13 @@ export class AlertComponent implements OnInit, OnDestroy {
                         message.cssClass = 'alert alert-danger';
                         break;
                 }
-
                 this.message = message;
+				this.timer = interval(5000).subscribe(() => this.alertService.clear());
             });
     }
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+		this.timer.unsubscribe();
     }
 }

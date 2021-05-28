@@ -64,11 +64,13 @@ export class PasswordSettingsComponent implements OnInit {
 			.subscribe(
 				data => {
 					this.loading = false;
-					this.alertService.success('Password changed successfully.')
+					this.alertService.success('Password changed successfully');
+					this.submitted = false;
+					this.form.reset();
 				},
 				err => {
 					this.loading = false;
-					this.alertService.error('Invalid password.')
+					this.alertService.error('Invalid password');
 					console.log(err);
 				});
 	}
