@@ -9,9 +9,9 @@ import { UserService } from '../user.service';
 })
 export class SettingsComponent implements OnInit {
 
-	constructor(private userService: UserService) { }
 
-	ngOnInit(): void {
-	}
+    constructor(private userService: UserService) { }
 
+    ngOnInit() {
+    }
 }

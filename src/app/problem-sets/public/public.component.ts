@@ -33,7 +33,7 @@ export class PublicComponent implements OnInit {
 	getPage(page: number): void {
 		this.problemSetsService.getPage(page)
 			.subscribe(data => {
-				this.problemSets = data.problemSets;
+				this.problemSets = JSON.parse(data.problemSets);
 				this.total = data.total;
 				this.p = page;
 			});

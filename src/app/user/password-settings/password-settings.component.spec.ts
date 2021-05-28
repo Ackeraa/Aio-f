@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UploadComponent } from './upload.component';
+import { PasswordSettingsComponent } from './password-settings.component';
 
-describe('UploadComponent', () => {
-  let component: UploadComponent;
-  let fixture: ComponentFixture<UploadComponent>;
+describe('PasswordSettingsComponent', () => {
+  let component: PasswordSettingsComponent;
+  let fixture: ComponentFixture<PasswordSettingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UploadComponent ]
+      declarations: [ PasswordSettingsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UploadComponent);
+    fixture = TestBed.createComponent(PasswordSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

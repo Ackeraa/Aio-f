@@ -87,5 +87,12 @@ export class UserService {
 		});
 	}
 
+	changeGeneral(data: any): any {
+		console.log(data);
+	}
+
+	changePassword(data: any): Observable<any> {
+		return this.authService.updatePassword(data);
+	}
 
 }

@@ -11,7 +11,6 @@ import { ProblemSearchModule } from '../_components';
 import {
 	CreateComponent,
 	BetaComponent,
-	UploadComponent,
 	CollectionComponent,
 } from '.';
 
@@ -19,7 +18,6 @@ import {
 	declarations: [
 		CreateComponent,
 		BetaComponent,
-		UploadComponent,
 		CollectionComponent,
 	],
 	imports: [

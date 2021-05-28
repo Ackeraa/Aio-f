@@ -49,10 +49,9 @@ export class SubmissionsComponent implements OnInit {
 	getPage(page: number): void {
 		this.submissionsService.getSubmissionsPage(page)
 			.subscribe(data => {
-				this.submissions = data.submissions;
+				this.submissions = JSON.parse(data.submissions);
 				this.total = data.total;
 				this.p = page;
-				console.log(this.p);
 			});
 	}
 	ngOnDestroy(): void {

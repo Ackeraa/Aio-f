@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
 	UserComponent,
@@ -7,7 +8,11 @@ import {
 	ProblemsComponent, 
 	GroupsComponent, 
 	FriendsComponent, 
-	SettingsComponent
+	SettingsComponent,
+	GeneralSettingsComponent,
+	PasswordSettingsComponent,
+	ConnectionSettingsComponent,
+	PrivacySettingsComponent 
 } from '.';
 
 @NgModule({
@@ -18,10 +23,16 @@ import {
 		ProblemsComponent, 
 		GroupsComponent, 
 		FriendsComponent, 
-		SettingsComponent
+		SettingsComponent,
+		GeneralSettingsComponent,
+		PasswordSettingsComponent,
+		ConnectionSettingsComponent,
+		PrivacySettingsComponent
 	],
 	imports: [
-		CommonModule
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule 
 	],
 	exports: [
 		UserComponent

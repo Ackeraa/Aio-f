@@ -34,8 +34,8 @@ export class CreateComponent implements OnInit {
 	tags: Array<string>;
 	rule_type: string;
 	is_visible: boolean;
-	languages: Array<string>;
-	allowed_languages: Array<string>;
+	languages: Array<any>;
+	allowed_languages: Array<any>;
 
 	submitted: boolean;
 
@@ -74,8 +74,13 @@ export class CreateComponent implements OnInit {
 		this.tags = [];
 		this.rule_type = 'acm';
 		this.is_visible = null;
-		this.languages = ['C', 'Cpp', 'Java', 'Python'];
-		this.allowed_languages = ['C', 'Cpp', 'Java', 'Python'];
+		this.languages = [
+			{ id: 0, value: 'C'},
+			{ id: 1, value: 'Cpp'},
+			{ id: 2, value: 'Java'},
+			{ id: 3, value: 'Python'}
+		];
+		this.allowed_languages = Array.from(this.languages);
 		this.submitted = false;
 	}
 
@@ -142,7 +147,6 @@ export class CreateComponent implements OnInit {
 
 	onSubmit(): void {
 		this.submitted = true;
-		console.log(this.form.invalid);
         if (this.form.invalid) {
             return;
         }

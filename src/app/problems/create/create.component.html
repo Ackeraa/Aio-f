@@ -179,15 +179,13 @@
 				</div>
 				<div *ngFor="let lan of languages"
 					class="custom-control custom-control-inline custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="{{lan}}"
+					<input type="checkbox" class="custom-control-input" id="{{lan.id}}"
 						   checked="checked" (click)="selectLan($event.target.checked, lan)">
-					<label class="custom-control-label" for="{{lan}}">{{lan}}</label>
+					<label class="custom-control-label" for="{{lan.id}}">{{lan.value}}</label>
 				</div>
 		</div>
 	</div>
 	<br/>
-	<br/>
-	<!--<app-problems-upload (uploadEvent)="setToken($event)"></app-problems-upload>-->
 	<br/>
 
 	<div class="row justify-content-center">

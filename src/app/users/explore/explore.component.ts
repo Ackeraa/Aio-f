@@ -21,7 +21,7 @@ export class ExploreComponent implements OnInit {
 	}
 
 	setUsers(data: any): void {
-		this.users = data.users;
+		this.users = JSON.parse(data.users);
 		this.total = data.total;
 	}
 
@@ -32,7 +32,7 @@ export class ExploreComponent implements OnInit {
 	getPage(page: number): void {
 		this.usersService.getPage(page)
 		.subscribe(data => {
-			this.users = data.users;
+			this.users = JSON.parse(data.users);
 			this.total = data.total;
 			this.p = page;
 		});

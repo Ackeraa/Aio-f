@@ -39,8 +39,7 @@ export class RecentComponent implements OnInit {
 	getPage(page: number): void {
 		this.contestsService.getPage(page)
 			.subscribe(data => {
-				this.contests = data.contests;
-				console.log(data.contests);
+				this.contests = JSON.parse(data.contests);
 				this.total = data.total;
 				this.p = page;
 			});

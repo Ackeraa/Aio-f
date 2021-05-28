@@ -51,6 +51,11 @@ export class AuthService implements OnInit{
 			}));
 	}
 
+	updatePassword(data: any): Observable<any> {
+		return this.tokenService.updatePassword(data)
+			.pipe(map(res => res.json()));
+	}
+
 	get(url: string, params: any = null): Observable<any> {
 		if (params == null) {
 			return this.tokenService.get(url)

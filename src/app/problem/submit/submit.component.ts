@@ -28,7 +28,7 @@ export class SubmitComponent implements OnInit {
 		this.problemService.problem$.pipe(filter(x => x != null))
 			.subscribe(problem => {
 				this.languages = problem.allowed_languages;
-				this.language =  this.languages[0].id;
+				this.language =  this.languages[0];
 			});
 
 		this.has_code = true;
@@ -58,7 +58,7 @@ export class SubmitComponent implements OnInit {
 		}
 	}
 	selectLanguage(id: any): void {
-		this.language = this.languages[id].id;
+		this.language = this.languages[id];
 		this.options.mode = this.modes[id];
 	}
 

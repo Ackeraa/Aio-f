@@ -37,7 +37,7 @@ export class ProblemSetComponent implements OnInit {
 	getPage(page: number): void {
 		this.problemSetService.getPage(page)
 			.subscribe(data => {
-				this.allProblems = data.problems;
+				this.allProblems = JSON.parse(data.problems);
 				this.total = data.total;
 				this.p = page;
 			});

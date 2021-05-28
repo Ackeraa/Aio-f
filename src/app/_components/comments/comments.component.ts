@@ -47,7 +47,7 @@ export class CommentsComponent implements OnInit {
 	getPage(page: number): void {
 		this.commentsService.getPage(this.which, page)
 			.subscribe(data => {
-				this.comments = data.comments;
+				this.comments = JSON.parse(data.comments);
 				this.total = data.total;
 				this.p = page;
 			});

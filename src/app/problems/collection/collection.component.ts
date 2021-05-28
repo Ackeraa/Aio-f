@@ -33,7 +33,7 @@ export class CollectionComponent implements OnInit {
 	getPage(page: number): void {
 		this.problemsService.getPage(page)
 			.subscribe(data => {
-				this.problems = data.problems;
+				this.problems = JSON.parse(data.problems);
 				this.total = data.total;
 				this.p = page;
 			});

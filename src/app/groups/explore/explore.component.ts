@@ -21,7 +21,7 @@ export class ExploreComponent implements OnInit {
 	}
 
 	setGroups(data: any): void {
-		this.groups = data.groups;
+		this.groups = JSON.parse(data.groups);
 		this.total = data.total;
 	}
 	
@@ -32,7 +32,7 @@ export class ExploreComponent implements OnInit {
 	getPage(page: number): void {
 		this.groupsService.getPage(page)
 			.subscribe(data => {
-				this.groups = data.groups;
+				this.groups = JSON.parse(data.groups);
 				this.total = data.total;
 				this.p = page;
 			});
