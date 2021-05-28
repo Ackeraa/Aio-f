@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
+import { filter, map} from 'rxjs/operators'; 
 import {
 	FormBuilder,
 	FormGroup,
@@ -18,31 +19,51 @@ export class GeneralSettingsComponent implements OnInit {
     form: FormGroup;
 	name: AbstractControl;
 	email: AbstractControl; 
-	password: AbstractControl;
-	password_confirmation: AbstractControl;
+	realName: AbstractControl;
+	school: AbstractControl;
+	major: AbstractControl;
+	motto: AbstractControl;
 
-    loading = false;
-    submitted = false;
-	name_exists = false;
-	email_exists = false;
+    loading: boolean;
+    submitted: boolean;
+	nameExists: boolean;
+	emailExists: boolean;
 
     constructor(private formBuilder: FormBuilder,
 				private userService: UserService) {
     }
 
     ngOnInit() {
-        this.form = this.formBuilder.group({
-            name: ['', Validators.compose([
-				Validators.required,
-				Validators.minLength(1),
-				Validators.maxLength(10),
-				this.nameValidator])],
-            email: ['', Validators.compose([
-				Validators.required,
-				this.emailValidator])],
-        });
-		this.name = this.form.controls['name'];
-		this.email = this.form.controls['email'];
+		this.loading = true;
+		this.submitted = false;
+		this.nameExists = false;
+		this.emailExists = false;
+		this.userService.homeInfo$
+			.pipe(filter(x => x != null),
+				  map(data => JSON.parse(data.user)))
+			.subscribe(user => {
+				this.form = this.formBuilder.group({
+					name: [user.name, Validators.compose([
+						Validators.required,
+						Validators.minLength(1),
+						Validators.maxLength(10),
+						this.nameValidator])],
+					email: [user.email, Validators.compose([
+						Validators.required,
+						this.emailValidator])],
+					realName: [user.realName],
+					school: [user.school],
+					major: [user.major],
+					motto: [user.motto]
+				});
+				this.name = this.form.controls['name'];
+				this.email = this.form.controls['email'];
+				this.realName = this.form.controls['realName'];
+				this.school = this.form.controls['school'];
+				this.major = this.form.controls['major'];
+				this.motto = this.form.controls['motto'];
+				this.loading = false;
+			});
     }
 
 	nameValidator(name: FormControl): {[s: string]: boolean} {
@@ -58,9 +79,6 @@ export class GeneralSettingsComponent implements OnInit {
 		}
 	}
 
-
-    get f() { return this.form.controls; }
-
     onSubmit() {
         this.submitted = true;
 
@@ -69,8 +87,8 @@ export class GeneralSettingsComponent implements OnInit {
         }
 
         this.loading = true;
-		this.name_exists = false;
-		this.email_exists = false;
+		this.nameExists = false;
+		this.emailExists = false;
     }
 
 
