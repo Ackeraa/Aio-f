@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FileUploader } from 'ng2-file-upload';
 import { UserService } from '../user.service';
 import { filter, map} from 'rxjs/operators'; 
+import { AlertService } from '../../_services';
 import {
 	FormBuilder,
 	FormGroup,
@@ -9,6 +11,8 @@ import {
 	AbstractControl
 } from '@angular/forms';
 
+const BASE_URL = 'http://39.106.54.201:3000';
+
 @Component({
 	selector: 'app-user-general-settings',
 	templateUrl: './general-settings.component.html',
@@ -16,10 +20,14 @@ import {
 })
 export class GeneralSettingsComponent implements OnInit {
 
+	photo: FileUploader;
+	photoPath: any = "http://39.106.54.201:3000/users/27/get_photo";
+
     form: FormGroup;
 	name: AbstractControl;
 	email: AbstractControl; 
-	realName: AbstractControl;
+	github: AbstractControl;
+	real_name: AbstractControl;
 	school: AbstractControl;
 	major: AbstractControl;
 	motto: AbstractControl;
@@ -30,7 +38,8 @@ export class GeneralSettingsComponent implements OnInit {
 	emailExists: boolean;
 
     constructor(private formBuilder: FormBuilder,
-				private userService: UserService) {
+				private userService: UserService,
+			    private alertService: AlertService) {
     }
 
     ngOnInit() {
@@ -38,27 +47,42 @@ export class GeneralSettingsComponent implements OnInit {
 		this.submitted = false;
 		this.nameExists = false;
 		this.emailExists = false;
+
+		this.photo = new FileUploader({
+			url: BASE_URL + '/users/upload_photo',
+			itemAlias: 'photo',
+		});
+		this.photo.onBeforeUploadItem = (item) => {
+			item.withCredentials = false;
+		}
+		this.photo.onBuildItemForm = (fileItem: any, form: any) => {
+			form.append('id', this.userService.id);
+		};
+
 		this.userService.homeInfo$
 			.pipe(filter(x => x != null),
-				  map(data => JSON.parse(data.user)))
+				  map(data => data.user))
 			.subscribe(user => {
 				this.form = this.formBuilder.group({
+					img: [null],
 					name: [user.name, Validators.compose([
 						Validators.required,
-						Validators.minLength(1),
+						Validators.minLength(5),
 						Validators.maxLength(10),
 						this.nameValidator])],
 					email: [user.email, Validators.compose([
 						Validators.required,
 						this.emailValidator])],
-					realName: [user.realName],
+					github: [user.github],
+					real_name: [user.real_name],
 					school: [user.school],
 					major: [user.major],
 					motto: [user.motto]
 				});
 				this.name = this.form.controls['name'];
 				this.email = this.form.controls['email'];
-				this.realName = this.form.controls['realName'];
+				this.github = this.form.controls['github'];
+				this.real_name = this.form.controls['real_name'];
 				this.school = this.form.controls['school'];
 				this.major = this.form.controls['major'];
 				this.motto = this.form.controls['motto'];
@@ -79,17 +103,57 @@ export class GeneralSettingsComponent implements OnInit {
 		}
 	}
 
-    onSubmit() {
-        this.submitted = true;
+	imagePreview(e: any): void {
+		const file = (e.target as HTMLInputElement).files[0];
 
-        if (this.form.invalid) {
-            return;
-        }
+		this.form.patchValue({
+			img: file
+		});
 
-        this.loading = true;
+		this.form.get('img').updateValueAndValidity()
+
+		const reader = new FileReader();
+		reader.onload = () => {
+			this.photoPath = reader.result as string;
+		}
+		reader.readAsDataURL(file)
+	}
+
+	onSubmit() {
+		this.submitted = true;
+
+		if (this.form.invalid) {
+			return;
+		}
+
+		this.alertService.clear();
+		this.loading = true;
 		this.nameExists = false;
 		this.emailExists = false;
-    }
+
+		this.userService.changeGeneral(this.form.value)
+		.subscribe(
+			data => {
+				this.loading = false;
+				this.alertService.success('Information changed successfully');
+				this.userService.getUser('');
+				this.userService.updateUserName();
+				this.submitted = false;
+			},
+			error => {
+				let errors = JSON.parse(error["_body"]).errors;
+				console.log(errors);
+				if (errors.name) {
+					this.nameExists = true;
+					this.alertService.error('Name has already exists');
+				}
+				if (errors.email) {
+					this.emailExists = true;
+					this.alertService.error('Email has already exists');
+				}
+				this.loading = false;
+			});
+	}
 
 
 }

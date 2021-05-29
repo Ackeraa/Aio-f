@@ -10,19 +10,7 @@ export class AuthService implements OnInit{
 	public user$: BehaviorSubject<any> = new BehaviorSubject(null);
 	
 	constructor(public tokenService: Angular2TokenService) {
-		this.tokenService.validateToken().subscribe(
-			res => {
-				if (res.status == 200){
-					let user = res.json().data;
-					this.user$.next({
-						user_id: user.id,
-						user_name: user.name
-					});
-				} else {
-					this.user$.next(null);
-				}
-			},
-		)
+		this.getUserInfo();
 	}
 
 	register(data: {name: string, email:string, password:string, passwordConfirmation:string}):
@@ -51,6 +39,22 @@ export class AuthService implements OnInit{
 			}));
 	}
 
+	getUserInfo(): void {
+		this.tokenService.validateToken().subscribe(
+			res => {
+				if (res.status == 200){
+					let user = res.json().data;
+					this.user$.next({
+						user_id: user.id,
+						user_name: user.name
+					});
+				} else {
+					this.user$.next(null);
+				}
+			},
+		);
+	}
+
 	updatePassword(data: any): Observable<any> {
 		return this.tokenService.updatePassword(data)
 			.pipe(map(res => res.json()));
@@ -69,6 +73,16 @@ export class AuthService implements OnInit{
 
 	post(url: string, body: any): Observable<any> {
 		return this.tokenService.post(url, body)
+				.pipe(map(res => res.json()));
+	}
+
+	put(url: string, body: any): Observable<any> {
+		return this.tokenService.put(url, body)
+				.pipe(map(res => res.json()));
+	}
+
+	delete(url: string, body: any): Observable<any> {
+		return this.tokenService.delete(url, body)
 				.pipe(map(res => res.json()));
 	}
 

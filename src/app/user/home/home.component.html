@@ -7,7 +7,7 @@
 						<h6>Github</h6>
 					</div>
 					<div class="col-7 text-secondary">
-						Root
+						{{data.user.github}}
 					</div>
 				</div>
 				<hr/>
@@ -16,7 +16,7 @@
 						<h6>Codeforces</h6>
 					</div>
 					<div class="col-7 text-secondary">
-						codeforces
+						{{data.user.oj_accounts.codeforces.name}}
 					</div>
 				</div>
 				<hr/>
@@ -25,16 +25,16 @@
 						<h6>Atcoder</h6>
 					</div>
 					<div class="col-7 text-secondary">
-						atcoder
+						{{data.user.oj_accounts.atcoder?.name}}
 					</div>
 				</div>
 				<hr/>
 				<div class="row mt-4">
 					<div class="col-5">
-						<h6>TopCoder</h6>
+						<h6>Poj</h6>
 					</div>
 					<div class="col-7 text-secondary">
-						topcoder
+						{{data.user.oj_accounts.poj?.name}}
 					</div>
 				</div>
 				<hr/>
@@ -64,10 +64,19 @@
 				<hr/>
 				<div class="row mt-4">
 					<div class="col-5">
+						<h6>Email</h6>
+					</div>
+					<div class="col-7 text-secondary">
+						{{data.user.email}}
+					</div>
+				</div>
+				<hr/>
+				<div class="row mt-4">
+					<div class="col-5">
 						<h6>School</h6>
 					</div>
 					<div class="col-7 text-secondary">
-						{{data.school}}
+						{{data.user.school}}
 					</div>
 				</div>
 				<hr/>
@@ -77,15 +86,6 @@
 					</div>
 					<div class="col-7 text-secondary">
 						{{data.user.major}}
-					</div>
-				</div>
-				<hr/>
-				<div class="row mt-4">
-					<div class="col-5">
-						<h6>Email</h6>
-					</div>
-					<div class="col-7 text-secondary">
-						{{data.user.email}}
 					</div>
 				</div>
 				<hr/>

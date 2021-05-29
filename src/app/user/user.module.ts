@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FileUploadModule } from 'ng2-file-upload';
 import { CommonModule } from '@angular/common';
 import {
 	UserComponent,
@@ -32,7 +33,8 @@ import {
 	imports: [
 		CommonModule,
 		FormsModule,
-		ReactiveFormsModule 
+		ReactiveFormsModule,
+		FileUploadModule 
 	],
 	exports: [
 		UserComponent

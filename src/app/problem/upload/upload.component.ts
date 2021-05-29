@@ -77,7 +77,6 @@ export class UploadComponent implements OnInit {
 			this.template.removeFromQueue(this.template.queue[0]);
 		}
 	}
-
 	onTemplateRemove() {
 		if (this.template.queue[0].isUploaded){
 			this.problemService.deleteDatas('template');

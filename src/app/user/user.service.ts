@@ -17,8 +17,7 @@ export class UserService {
 	
 	isSelf: boolean;
 
-	constructor(private authService: AuthService) {
-	}
+	constructor(private authService: AuthService) { }
 
 	getUser(id: string): void {
 		if (id) {
@@ -39,8 +38,15 @@ export class UserService {
 					this.id = user.user_id;
 					this.authService.get(url)
 						.subscribe(info => {
+							info.user = JSON.parse(info.user);
 							this.homeInfo$.next(info);
 						});
+				});
+			this.authService.user$
+				.pipe(filter(x => x != null))
+				.subscribe(user => {
+					let url = `users/${user.user_id}/get_photo`;
+					this.id = user.user_id;
 				});
 		}
 	}
@@ -87,12 +93,22 @@ export class UserService {
 		});
 	}
 
+	updateUserName(): void {
+		this.authService.getUserInfo();
+	}
+
 	changeGeneral(data: any): any {
-		console.log(data);
+		let url = `users/${this.id}`;
+		return this.authService.put(url, data);
 	}
 
 	changePassword(data: any): Observable<any> {
 		return this.authService.updatePassword(data);
 	}
 
+	connect(which: string, account: any): Observable<any> {
+		let url = `users/${this.id}/connect`;
+		let data = { which: which, account: account};
+		return this.authService.post(url, data);
+	}
 }

@@ -9,6 +9,8 @@ import { UserService } from './user.service';
 })
 export class UserComponent implements OnInit {
 
+	photo: any = "http://39.106.54.201:3000/users/27/get_photo";
+
 	constructor(private route: ActivatedRoute,
 				private userService: UserService) { }
 
