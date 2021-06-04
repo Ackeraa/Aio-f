@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { GroupsService } from '../groups.service';
 
 @Component({
-  selector: 'app-my-groups',
-  templateUrl: './my-groups.component.html',
-  styleUrls: ['./my-groups.component.scss']
+	selector: 'app-my-groups',
+	templateUrl: './my-groups.component.html',
+	styleUrls: ['./my-groups.component.scss']
 })
 export class MyGroupsComponent implements OnInit {
 
-  constructor() { }
+	groups: Array<any>;
+	loading: boolean;
 
-  ngOnInit(): void {
-  }
+	constructor(private groupsService: GroupsService) {
+	}
 
+	ngOnInit(): void {
+		this.loading = true;
+		this.groupsService.getMyGroups()
+			.subscribe(groups => {
+				this.groups = groups;
+				this.loading = false;
+			});
+	}
 }

@@ -28,7 +28,7 @@ export class ContestService implements OnInit {
 		this.authService.get(url)
 			.subscribe(data => {
 				this.contest$.next(data.contest);
-				this.problems$.next(data.problems);
+				this.problems$.next(JSON.parse(data.problems));
 			});
 	}
 

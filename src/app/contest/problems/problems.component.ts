@@ -25,11 +25,13 @@ export class ProblemsComponent implements OnInit {
 		this.p = 1;
 		this.problems = [];
 		this.contestService.problems$
-			.subscribe(problems => this.problems = problems);
+			.subscribe(problems => {
+				this.problems = problems;
+			});
 	}
 
 	setAllProblems(data: any): void {
-		this.allProblems = data.problems;
+		this.allProblems = JSON.parse(data.problems);
 		this.total = data.total;
 		this.p = 1;
 	}
@@ -37,7 +39,7 @@ export class ProblemsComponent implements OnInit {
 	getPage(page: number): void {
 		this.contestService.getPage(page)
 			.subscribe(data => {
-				this.allProblems = data.problems;
+				this.allProblems = JSON.parse(data.problems);
 				this.total = data.total;
 				this.p = page;
 			});

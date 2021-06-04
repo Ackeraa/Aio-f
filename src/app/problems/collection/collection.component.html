@@ -9,8 +9,8 @@
 			Loading...
 		</div>
 		<div class="row">
-			<th class="col-1"> # </th>
-			<th class="col"> TITLE </th>
+			<th class="col-2"> # </th>
+			<th class="col-3"> TITLE </th>
 			<th class="col"> SOURCE </th>
 			<th class="col"> STATUS </th>
 			<th class="col">
@@ -25,8 +25,8 @@
 			<div class="table-content" *ngFor="let problem of problems | paginate:
 						{itemsPerPage:20, currentPage:p, totalItems:total}">
 				<div class="row">
-					<div class="col-1">{{problem.id}}</div>
-					<div class="col">
+					<div class="col-2">{{problem.id}}</div>
+					<div class="col-3">
 						<a class="link link-content" (click)="viewProblem(problem.source, problem.id)">
 							{{problem.name}}
 						</a>

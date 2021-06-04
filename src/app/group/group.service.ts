@@ -20,8 +20,8 @@ export class GroupService {
 	}
 
 	getGroup(id: string): void {
-		this.id = id;
 		this.isSelf = false;
+		this.id = id;
 		let url = `groups/${id}/get_info`;
 		this.authService.get(url)
 			.subscribe(info => {

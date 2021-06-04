@@ -10,18 +10,11 @@ const BASE_URL = 'http://127.0.0.1:3000';
 })
 export class ContestsComponent implements OnInit{
 
-	contests: any;
 	constructor(private http: HttpClient) {
-		this.getContests();
 	}
 
-	getContests(): void {
-		let url = BASE_URL + '/contests';
-		this.http.get(url).subscribe(data => {
-			this.contests = data;
-		});
-	}
 	ngOnInit(): void {
+
 	}
 
 }

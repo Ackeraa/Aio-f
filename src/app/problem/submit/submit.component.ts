@@ -39,9 +39,9 @@ export class SubmitComponent implements OnInit {
 			lineNumbers: true,
 			lineWrapping: true,
 			theme: 'dracula',
-			mode: 'clike'
+			mode: 'javascript'
 		}
-		this.modes = ['clike', 'clike', 'javascript', 'python'];
+		this.modes = ['clike', 'clike', 'clike', 'clike'];
 		this.themes = ['Dracula', 'Eclipse', 'Idea']; 
 		this.code = '';
 	}
@@ -59,7 +59,7 @@ export class SubmitComponent implements OnInit {
 	}
 	selectLanguage(id: any): void {
 		this.language = this.languages[id];
-		this.options.mode = this.modes[id];
+		//this.options.mode = this.modes[id];
 	}
 
 	selectTheme(id: any): void {

@@ -9,13 +9,14 @@ import { ProblemService } from './problem.service';
 })
 export class ProblemComponent implements OnInit {
 
+	source: string;
 	constructor(private route: ActivatedRoute,
 			    private problemService: ProblemService) {
 	}
 
 	ngOnInit(): void {
-		let source = this.route.snapshot.paramMap.get('source');
+		this.source = this.route.snapshot.paramMap.get('source');
 		let id = this.route.snapshot.paramMap.get('id');
-		this.problemService.getProblem(source, id);
+		this.problemService.getProblem(this.source, id);
 	}
 }

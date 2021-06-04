@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map, filter } from 'rxjs/operators'; 
 import { UserService } from '../user.service';
 import { AlertService } from '../../_services';
 
@@ -21,9 +22,26 @@ export class ConnectionSettingsComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.codeforces = { name: ' ', password: ' ' };
-		this.atcoder = { name: ' ', password: ' ' };
-		this.poj = { name: ' ', password: ' ' };
+		this.loading = true;
+		this.userService.homeInfo$
+			.pipe(filter(x => x != null),
+				  map(x => x.user.oj_accounts))
+			.subscribe(account => {
+				console.log(account);
+				this.codeforces = {
+					name: account?.codeforces?.name || '',
+					password: account?.codeforces?.password || ''
+				};
+				this.atcoder = {
+					name: account?.atcoder?.name || '',
+					password: account?.atcoder?.password || ''
+				};
+				this.poj = {
+					name: account?.poj?.name || '',
+					password: account?.poj?.password || ''
+				};
+				this.loading = false;
+			});
 	}
 	
 	connect(which: string): void {

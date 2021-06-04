@@ -18,4 +18,9 @@ export class GroupsService {
 	getPage(page: number): Observable<any> {
 		return this.searchService.getPage(page);
 	}
+
+	getMyGroups(): Observable<any> {
+		let url = 'groups/get_my_groups';
+		return this.authService.get(url);
+	}
 }

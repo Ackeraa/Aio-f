@@ -29,7 +29,7 @@ export class ProblemSetComponent implements OnInit {
 	}
 
 	setAllProblems(data: any): void {
-		this.allProblems = data.problems;
+		this.allProblems = JSON.parse(data.problems);
 		this.total = data.total;
 		this.p = 1;
 	}

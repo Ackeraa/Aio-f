@@ -42,12 +42,6 @@ export class UserService {
 							this.homeInfo$.next(info);
 						});
 				});
-			this.authService.user$
-				.pipe(filter(x => x != null))
-				.subscribe(user => {
-					let url = `users/${user.user_id}/get_photo`;
-					this.id = user.user_id;
-				});
 		}
 	}
 
