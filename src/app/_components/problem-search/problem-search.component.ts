@@ -22,9 +22,11 @@ export class ProblemSearchComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loadingEvent.emit(false);
-		this.sources = ["Atcoder", "Codeforces", "UVA", "POJ"];
+		this.sources = ["Aio", "Atcoder", "Codeforces", "POJ"];
 		this.searchService.search(this.sources[0].toLowerCase(), "")
-		.subscribe(data => this.problemsEvent.emit(data));
+		.subscribe(data => {
+			this.problemsEvent.emit(data);
+		});
 
 		//Observer of source change.
 		fromEvent(this.source.nativeElement, 'change')
@@ -35,7 +37,10 @@ export class ProblemSearchComponent implements OnInit {
 				source, this.query.nativeElement.value)))
 				.subscribe(
 					(obs: any) => {
-						obs.subscribe(data => this.problemsEvent.emit(data)); 
+						obs.subscribe(data => { 
+							console.log(data);
+							this.problemsEvent.emit(data);
+						}); 
 						this.loadingEvent.emit(false);
 					},
 					(err: any) => {
