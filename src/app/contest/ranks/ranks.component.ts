@@ -29,8 +29,17 @@ export class RanksComponent implements OnInit {
 		this.contestService.getRanks()
 			.subscribe(ranks => {
 				this.ranks = ranks;
-				console.log(ranks);
+				this.ranks.sort((a, b) => {
+					if (a.accepts < b.accepts) {
+						return 1;
+					}
+					if (a.accepts > b.accepts) {
+						return -1;
+					}
+					return a.time - b.time;
+				});
 			});
+
 		//only receive.
 		this.receiver = this.contestService.getRanksChannel()
 			.pipe(filter(x => x != null))

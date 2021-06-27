@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { map, filter, switchMap } from 'rxjs/operators'; 
 import { ContestsService } from '../contests.service';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
 	selector: 'app-contests-past',
@@ -9,16 +11,21 @@ import { ContestsService } from '../contests.service';
 export class PastComponent implements OnInit {
 
 	uri: string = 'contests';
-	addition: string = 'recent';
+	addition: string = 'past';
 	loading: boolean;
 	contests: Array<any>;
 	p: number;
 	total: number;
+	user: any;
 
-	constructor(private contestsService: ContestsService) {
+	constructor(private contestsService: ContestsService,
+			    private authService: AuthService) {
 	}
 
 	ngOnInit(): void {
+		this.authService.user$
+			.pipe(filter(x => x != null))
+			.subscribe(user => this.user = user);
 	}
 
 	setContests(data: any): void {
@@ -43,5 +50,11 @@ export class PastComponent implements OnInit {
 				this.total = data.total;
 				this.p = page;
 			});
+	}
+
+	deleteContest(id: string): void {
+		let index = this.contests.findIndex(x => x.id == id);
+		this.contests.splice(index, 1);
+		this.contestsService.deleteContest(id);
 	}
 }

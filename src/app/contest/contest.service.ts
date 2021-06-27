@@ -27,7 +27,7 @@ export class ContestService implements OnInit {
 		let url = 'contests/' + id + '/problems';
 		this.authService.get(url)
 			.subscribe(data => {
-				this.contest$.next(data.contest);
+				this.contest$.next(JSON.parse(data.contest));
 				this.problems$.next(JSON.parse(data.problems));
 			});
 	}
@@ -93,7 +93,7 @@ export class ContestService implements OnInit {
 		    .pipe(
 				filter(x => x != null),
 				switchMap(() => {
-					let url = 'ws://127.0.0.1:3000/cable';
+					let url = 'ws://39.106.54.201:3000/cable';
 					let channel = 'RanksChannel';
 					let params = {
 						contest_id: this.id

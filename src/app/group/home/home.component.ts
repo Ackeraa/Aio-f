@@ -10,13 +10,18 @@ import { GroupService } from '../group.service';
 export class HomeComponent implements OnInit {
 
 	data: any;
+	loading: boolean;
 
 	constructor(private groupService: GroupService) { }
 
 	ngOnInit(): void {
+		this.loading = true;
 		this.groupService.homeInfo$
 			.pipe(filter(x => x != null))
-			.subscribe(homeInfo => this.data = homeInfo);
+			.subscribe(homeInfo => {
+				this.data = homeInfo;
+				this.loading = false;
+			});
 	}
 
 }

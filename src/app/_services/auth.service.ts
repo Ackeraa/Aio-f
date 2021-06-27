@@ -25,7 +25,8 @@ export class AuthService implements OnInit{
 				let user = res.json().data;
 				this.user$.next({
 					user_id: user.id,
-					user_name: user.name
+					user_name: user.name,
+					user_role: user.role
 				});
 				return res.json();
 			}));
@@ -46,7 +47,8 @@ export class AuthService implements OnInit{
 					let user = res.json().data;
 					this.user$.next({
 						user_id: user.id,
-						user_name: user.name
+						user_name: user.name,
+						user_role: user.role
 					});
 				} else {
 					this.user$.next(null);
@@ -81,7 +83,7 @@ export class AuthService implements OnInit{
 				.pipe(map(res => res.json()));
 	}
 
-	delete(url: string, body: any): Observable<any> {
+	delete(url: string, body: any = null): Observable<any> {
 		return this.tokenService.delete(url, body)
 				.pipe(map(res => res.json()));
 	}

@@ -1,10 +1,10 @@
 <div class="card-columns">
 	<div *ngFor="let contest of contests" class="card sub-card">
-		<a href="#">
+		<a class="link" (click)="viewContest(contest.id)">
 			<div class="card-body">
-				<h5 class="card-title">{{contest.name}} 1</h5>
+				<h5 class="card-title">{{contest.name}}</h5>
 				<p class="card-text">
-				a
+				Rank 1
 				</p>
 				<p class="card-text">
 				<small class="text-muted">

@@ -3,6 +3,7 @@ import { Subject, Observable, fromEvent } from 'rxjs';
 import { map, filter, debounceTime, tap } from 'rxjs/operators'; 
 import { Router } from '@angular/router';
 import { ContestService } from '../contest.service';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
 	selector: 'app-contest-problems',
@@ -11,6 +12,7 @@ import { ContestService } from '../contest.service';
 })
 export class ProblemsComponent implements OnInit {
 
+	user: any;
 	loading: boolean;
 	allProblems: any;
 	problems: Array<any>;
@@ -18,7 +20,8 @@ export class ProblemsComponent implements OnInit {
 	total: number;
 
 	constructor(private router: Router,
-			    private contestService: ContestService){
+			    private contestService: ContestService,
+			    private authService: AuthService){
 	}
 
 	ngOnInit(): void {
@@ -27,6 +30,11 @@ export class ProblemsComponent implements OnInit {
 		this.contestService.problems$
 			.subscribe(problems => {
 				this.problems = problems;
+			});
+		this.authService.user$
+			.pipe(filter(x => x != null))
+			.subscribe(user => { 
+				this.user = user;
 			});
 	}
 

@@ -31,7 +31,7 @@ export class SubmitComponent implements OnInit {
 			.subscribe(problems => {
 				this.problems = problems;
 				this.languages = problems[0].allowed_languages;
-				this.language = this.languages[0].id;
+				this.language = this.languages[0];
 			});
 
 		this.problem = 0;
@@ -69,8 +69,8 @@ export class SubmitComponent implements OnInit {
 	}
 
 	selectLanguage(id: any): void {
-		this.language = this.languages[id].id;
-		this.options.mode = this.modes[id];
+		this.language = this.languages[id];
+		//this.options.mode = this.modes[id];
 	}
 
 	selectTheme(id: any): void {

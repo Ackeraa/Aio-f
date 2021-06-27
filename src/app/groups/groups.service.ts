@@ -23,4 +23,9 @@ export class GroupsService {
 		let url = 'groups/get_my_groups';
 		return this.authService.get(url);
 	}
+
+	create(data: any): Observable<any> {
+		let url = 'groups';
+		return this.authService.post(url, data);
+	}
 }

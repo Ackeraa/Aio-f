@@ -37,12 +37,22 @@
 								-
 								{{contest.end_time | date: 'HH:mm'}}
 								<sup *ngIf="contest.days > 0">
-									+{{contest.days}}
+									+{{contest.days | number:"1.0-0"}}
 								</sup>
 							</p>
 						</div>
-						<div class="col-auto status">
-							<i class="fas fa-user-alt"></i> 23
+						<div *ngIf="user && user.user_role=='admin'" class="col-auto status">
+							<!--<i class="fas fa-user-alt"></i> 23-->
+
+							<a routerLink="/contests/edit/{{contest.id}}" class="mr-2">
+								<button type="button" class="btn btn-outline-primary">
+									<i class="far fa-edit"></i>
+								</button>
+							</a>
+							<button type="button" class="btn btn-outline-danger"
+									(click)="deleteContest(contest.id)">
+								<i class="far fa-trash-alt"></i>
+							</button>
 						</div>
 					</div>
 				</div>

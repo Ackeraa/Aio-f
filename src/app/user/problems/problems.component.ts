@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { filter } from 'rxjs/operators'; 
 import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-user-problems',
@@ -11,7 +12,8 @@ export class ProblemsComponent implements OnInit {
 
 	classifiedProblems: Array<any>;
 
-	constructor(private userService: UserService) { }
+	constructor(private userService: UserService,
+			   	private router: Router) { }
 
 	ngOnInit(): void {
 		this.userService.problems$
@@ -31,5 +33,16 @@ export class ProblemsComponent implements OnInit {
 					this.classifiedProblems.push(obj);
 				}
 			});
+	}
+
+	viewProblem(source: any, id: any): void {
+		console.log(source, id)
+		let url;
+		if (source == 'aio') {
+			url = 'problem/l/' + id;
+		} else {
+			url = 'problem/v/' + id;
+		}
+		this.router.navigate([url]);
 	}
 }

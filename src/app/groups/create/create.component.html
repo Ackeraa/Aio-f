@@ -1,10 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
 	<div class="row">
 		<div class="col-md-4">
-			<label class="form-label"><h5>Title</h5></label>
+			<label class="form-label"><h5>Name</h5></label>
 			<div *ngIf="name.hasError('required') && name.touched"
 				   class="alert alert-danger" role="alert">
-				Title is required.
+				Name is required.
 			</div>
 			<input type="text" [formControl]="name" class="form-control"/>
 		</div>

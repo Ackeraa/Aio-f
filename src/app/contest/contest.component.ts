@@ -31,6 +31,7 @@ export class ContestComponent implements OnInit {
 		this.contestService.contest$
 		.pipe(filter(x => x != null))
 		.subscribe(contest => {
+			console.log(contest);
 			this.start_time = new Date(contest.start_time).getTime();
 			this.end_time = new Date(contest.end_time).getTime();
 			let now = Date.now();

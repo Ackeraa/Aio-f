@@ -9,7 +9,8 @@
     <tr *ngFor="let classfiedProblem of classifiedProblems">
 		<td>{{classfiedProblem.source}}</td>
       <td>
-		  <a *ngFor="let problem of classfiedProblem.problems; let i = index">
+		  <a *ngFor="let problem of classfiedProblem.problems; let i = index"
+	   		  (click)="viewProblem(classfiedProblem.source, problem)">
 			  {{problem}}
 			  <text *ngIf="i !== classfiedProblem.problems.length - 1">
 			  	,

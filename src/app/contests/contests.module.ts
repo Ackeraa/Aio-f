@@ -9,14 +9,16 @@ import {
 	ContestsComponent,
 	CreateComponent,
 	RecentComponent,
-	PastComponent 
+	PastComponent,
+	EditComponent
 } from '.';
 
 @NgModule({
 	declarations: [
 		CreateComponent,
 		RecentComponent,
-		PastComponent
+		PastComponent,
+		EditComponent
 	],
 	imports: [
 		CommonModule,

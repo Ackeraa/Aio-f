@@ -77,9 +77,8 @@ export class LoginComponent implements OnInit {
 		this.authService.logIn(data)
 			.subscribe(
 				data => {
-					if(data.status == 200){
-						this.router.navigate([this.returnUrl]);
-					}
+					console.log("FFFFFFF");
+					this.router.navigate([this.returnUrl]);
 				},
 				error => {
 					console.log('err:', error);

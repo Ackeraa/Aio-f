@@ -1,87 +1,89 @@
-<div class="card shadow-sm">
-	<div class="card-body">
-		<div class="row">
-			<th class="col-1"> # </th>
-			<th class="col"> TITLE </th>
-			<th class="col"> STATUS </th>
-			<th class="col"> PASS RATE </th>
-			<th class="col"> </th>
-		</div>
-		<hr class="title"/>
-		<div *ngIf="!loading">
-			<div class="table-content" *ngFor="let problem of problems; let i = index">
-				<div class="row">
-					<div class="col-1">{{i + 1}}</div>
-					<div class="col">
-						<a class="link link-content" (click)="viewProblem(problem.source, problem.id)">
-							{{problem.name}}
-						</a>
+<div *ngIf="!loading && user">
+	<div class="card shadow-sm">
+		<div class="card-body">
+			<div class="row">
+				<th class="col-1"> # </th>
+				<th class="col"> TITLE </th>
+				<th class="col"> STATUS </th>
+				<th class="col"> PASS RATE </th>
+				<th *ngIf="user && user.user_role=='admin'" class="col"> </th>
+			</div>
+			<hr class="title"/>
+			<div *ngIf="!loading">
+				<div class="table-content" *ngFor="let problem of problems; let i = index">
+					<div class="row">
+						<div class="col-1">{{i + 1}}</div>
+						<div class="col">
+							<a class="link link-content" (click)="viewProblem(problem.source, problem.id)">
+								{{problem.name}}
+							</a>
+						</div>
+						<div class="col">Accept</div>
+						<div class="col">3/45</div>
+						<div *ngIf="user && user.user_role=='admin'" class="col">
+							<button type="button" class="btn btn-outline-danger"
+									(click)="deleteProblem(problem.id)">
+								<i class="far fa-trash-alt"></i>
+							</button>
+						</div>
 					</div>
-					<div class="col">Accept</div>
-					<div class="col">3/45</div>
-					<div class="col">
-						<button type="button" class="btn btn-outline-danger"
-								(click)="deleteProblem(problem.id)">
-							<i class="far fa-trash-alt"></i>
-						</button>
-					</div>
+					<hr class="content"/>
 				</div>
-				<hr class="content"/>
 			</div>
 		</div>
 	</div>
-</div>
-<br/> <br/>
+	<br/> <br/>
 
-<div class="card shadow-sm">
-	<div class="card-body">
-		<app-problem-search
-			(problemsEvent)="setAllProblems($event)" 
-			(loadingEvent)="setLoading($event)" >
-		</app-problem-search>
-		<br/>
-		<div *ngIf="loading" class="row">
-			Loading...
-		</div>
-		<div class="row">
-			<th class="col-2"> # </th>
-			<th class="col-3"> TITLE </th>
-			<th class="col"> PASS RATE </th>
-			<th class="col">DIFFICULTY </th>
-			<th class="col"> </th>
-		</div>
-		<hr class="title"/>
-		<div *ngIf="!loading">
-			<div class="table-content" *ngFor="let problem of allProblems | paginate:
-						{itemsPerPage:20, currentPage:p, totalItems:total}">
-				<div class="row">
-					<div class="col-2">{{problem.vid}}</div>
-					<div class="col-3">
-						<a class="link link-content" (click)="viewProblem(problem.source, problem.id)">
-							{{problem.name}}
-						</a>
+	<div *ngIf="user && user.user_role=='admin'" class="card shadow-sm">
+		<div class="card-body">
+			<app-problem-search
+				(problemsEvent)="setAllProblems($event)" 
+				(loadingEvent)="setLoading($event)" >
+			</app-problem-search>
+			<br/>
+			<div *ngIf="loading" class="row">
+				Loading...
+			</div>
+			<div class="row">
+				<th class="col-2"> # </th>
+				<th class="col-3"> TITLE </th>
+				<th class="col"> PASS RATE </th>
+				<th class="col">DIFFICULTY </th>
+				<th class="col"> </th>
+			</div>
+			<hr class="title"/>
+			<div *ngIf="!loading">
+				<div class="table-content" *ngFor="let problem of allProblems | paginate:
+							{itemsPerPage:20, currentPage:p, totalItems:total}">
+					<div class="row">
+						<div class="col-2">{{problem.vid}}</div>
+						<div class="col-3">
+							<a class="link link-content" (click)="viewProblem(problem.source, problem.id)">
+								{{problem.name}}
+							</a>
+						</div>
+						<div class="col">1/100</div>
+						<div class="col">Hard</div>
+						<div class="col">
+							<button type="button" class="btn btn-outline-dark"
+									(click)="addProblem(problem.id)"
+									[disabled]="isAdded(problem.id)">
+									<i class="fas fa-plus"></i>
+							</button>
+						</div>
 					</div>
-					<div class="col">1/100</div>
-					<div class="col">Hard</div>
-					<div class="col">
-						<button type="button" class="btn btn-outline-dark"
-								(click)="addProblem(problem.id)"
-							    [disabled]="isAdded(problem.id)">
-								<i class="fas fa-plus"></i>
-						</button>
-					</div>
+					<hr class="content"/>
 				</div>
-				<hr class="content"/>
 			</div>
 		</div>
 	</div>
-</div>
-<br/>
-<div class="row justify-content-center">
-	<pagination-controls class="paginator"
-		(pageChange)="getPage($event)"
-		auotHide="true"
-		previousLabel=""
-		nextLabel="" >
-	</pagination-controls>
+	<br/>
+	<div *ngIf="user && user.user_role=='admin'" class="row justify-content-center">
+		<pagination-controls class="paginator"
+			(pageChange)="getPage($event)"
+			auotHide="true"
+			previousLabel=""
+			nextLabel="" >
+		</pagination-controls>
+	</div>
 </div>

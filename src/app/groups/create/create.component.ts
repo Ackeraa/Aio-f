@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { ProblemSetsService } from '../problem-sets.service';
+import { GroupsService } from '../groups.service';
 import {
 	FormBuilder,
 	FormGroup,
@@ -11,7 +11,7 @@ import {
 } from '@angular/forms';
 
 @Component({
-	selector: 'app-problem-sets-create',
+	selector: 'app-groups-create',
 	templateUrl: './create.component.html',
 	styleUrls: ['./create.component.scss']
 })
@@ -22,7 +22,7 @@ export class CreateComponent implements OnInit {
 
 	constructor(private router: Router,
 				private fb: FormBuilder,
-			    private problemSetsService: ProblemSetsService) {
+			    private groupsService: GroupsService) {
 	}
 
 	ngOnInit(): void {
@@ -36,9 +36,9 @@ export class CreateComponent implements OnInit {
 	}
 
 	onSubmit(form: any) {
-		this.problemSetsService.create(form)
-			.subscribe(problemSet => {
-				this.router.navigate(['/problem-set/' + problemSet.id]);
+		this.groupsService.create(form)
+			.subscribe(group => {
+				this.router.navigate(['/group/' + group.id]);
 			});
 	}
 }

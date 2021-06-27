@@ -22,4 +22,19 @@ export class ContestsService {
 		let url = 'contests';
 		return this.authService.post(url, data);
 	}
+
+	edit(id: string, data: any): Observable<any> {
+		let url = 'contests/' + id;
+		return this.authService.put(url, data);
+	}
+
+	deleteContest(id: string): Observable<any> {
+		let url = 'contests/' + id;
+		return this.authService.delete(url);
+	}
+
+	getContest(id: string): Observable<any> {
+		let url = 'contests/' + id;
+		return this.authService.get(url);
+	}
 }

@@ -26,10 +26,11 @@ a:focus-visible {
 }
 
 .link {
-    font-size: 18px;
+    //font-size: 18px;
     position: relative;
     white-space: nowrap;
-    color: var(--color-text);
+    //color: var(--color-text);
+	color: #4D4D4D;
 }
 
 .link::before,
@@ -48,8 +49,8 @@ a:focus-visible {
 }
 
 .link-content {
-    font-size: 1.15rem;
-	color: #19345A;
+   // font-size: 1.15rem;
+//	color: #19345A;
 }
 
 .link-content::before {
@@ -65,8 +66,8 @@ a:focus-visible {
 
 .link-title {
     font-family: cursive;
-    font-size: 1.575rem;
-    text-transform: lowercase;
+    font-size: 1.275rem;
+   // text-transform: lowercase;
 }
 
 .link-title::before {
@@ -90,8 +91,8 @@ hr.content {
 }
 
 .table-content {
-    font-family: cursive;
-    font-size: 1.15rem;
+    //font-family: cursive;
+    //font-size: 1.15rem;
 }
 
 .bottom-alert{

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import { map, filter } from 'rxjs/operators'; 
 import { AuthService } from '../../_services/auth.service';
+import { AlertService } from '../../_services/alert.service';
 import { CommentsService } from '../../_services';
 
 @Component({
@@ -25,6 +26,7 @@ export class CommentsComponent implements OnInit {
 	total: number;
 
 	constructor(private authService: AuthService,
+				private alertService: AlertService,
 				private commentsService: CommentsService) {
 	}
 
@@ -36,7 +38,7 @@ export class CommentsComponent implements OnInit {
 	}
 
 	setComments(data: any): void {
-		this.comments = data.comments;
+		this.comments = JSON.parse(data.comments);
 		this.total = data.total;
 	}
 
@@ -89,10 +91,14 @@ export class CommentsComponent implements OnInit {
 	}
 
 	addComment(): void {
+		if (this.descriptions[0] === '') {
+			return;
+		}
 		this.comments.unshift({
 			comment: { 
 				creator: this.user.user_name,
 				description: this.descriptions[0],
+				created_at: Date.now(),
 				likes: { votes: 0, voters: [] },
 				dislikes: { votes: 0, voters: [] }
 			},
@@ -102,17 +108,16 @@ export class CommentsComponent implements OnInit {
 	}
 
 	reply(node: any): void {
-		node.comment.is_visible = true;
-		node.children.unshift({
-			comment: { 
-				creator: this.user.user_name,
-				description: this.descriptions[node.comment.id],
-				likes: { votes: 0, voters: [] },
-				dislikes: { votes: 0, voters: [] }
-			},
-			children: []
-		});
-		this.commentsService.create(node.comment.id, this.which, this.descriptions[node.comment.id]);
+		if (!this.descriptions[node.comment.id]) {
+			return;
+		}
+		this.commentsService.create(node.comment.id, this.which, this.descriptions[node.comment.id])
+			.subscribe(comment => {
+				node.comment.is_visible = true;
+				node.children.unshift({
+					comment: comment,
+					children: []
+				});
+			});
 	}
-
 }

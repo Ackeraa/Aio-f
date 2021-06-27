@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { GroupsComponent } from './groups.component';
 import {
 	ExploreComponent,
-	MyGroupsComponent 
+	MyGroupsComponent,
+	CreateComponent
 } from '.';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
 			{ path: '', redirectTo: 'my-groups', pathMatch: 'full' },
 			{ path: 'my-groups', component: MyGroupsComponent },
 			{ path: 'explore', component: ExploreComponent },
+			{ path: 'create', component: CreateComponent }
 		]
 	},
 ];

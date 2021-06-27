@@ -4,7 +4,8 @@ import {
 	ContestsComponent,
 	CreateComponent,
 	RecentComponent,
-	PastComponent
+	PastComponent,
+	EditComponent
 } from '.';
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
 			{ path: 'create', component: CreateComponent },
 			{ path: 'recent', component: RecentComponent },
 			{ path: 'past', component: PastComponent },
+			{ path: 'edit/:id', component: EditComponent }
 		]
 	},
 ];

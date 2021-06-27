@@ -16,11 +16,12 @@ export class SubmissionsService {
 	}
 
 	getSubmissionsChannel(params: any): Observable<any> {
+		console.log("FUCK", params);
 		let url = 'ws://39.106.54.201:3000/cable';
 		let channel = 'SubmissionsChannel';
 		return this.cableService
-		   .cable(url, params)
-		   .channel(channel)
+		   .cable(url)
+		   .channel(channel, params)
 		   .received();
 	}
 
