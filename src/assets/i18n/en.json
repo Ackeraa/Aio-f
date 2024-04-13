@@ -1,0 +1,102 @@
+{
+  "keywords": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "home": "Home",
+    "contest": "Contest",
+    "contests": "Contests",
+    "recentContests": "Recent contests",
+    "problem": "Problem",
+    "problems": "Problems",
+    "recentProblems": "Recent problems",
+    "problemSets": "Problem sets",
+    "submissions": "Submissions",
+    "mySubmissions": "My submissions",
+    "discussion": "Discussion",
+    "groups": "Groups",
+    "users": "Users",
+    "messages": "Messages",
+    "announcements": "Announcements",
+    "public": "Public",
+    "group": "Group",
+    "private": "Private",
+    "create": "Create",
+    "rank": "Rank",
+    "overview": "Overview",
+    "submit": "Submit",
+    "Browse": "Browse"
+  },
+  "errors": {
+    "tooShort": "{{v1}} is too short (minimum is {{v2}} characters).",
+    "tooLong": "{{v1}} is too long (maximum is {{v2}} characters).",
+    "tooLarge": "{{v1}} is too large (maximum is {{v2}}).",
+    "required": "{{v1}} can't be blank.",
+    "invalid": "{{v1}} is invalid."
+  },
+  "welcome": "Oh, hello there, dear!",
+  "auth": {
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "passwordConfirm": "Password confirmation",
+    "passwordMismatch": "Password mismatch",
+    "resetPassword": "Reset Password",
+    "forgotPassword": "Forgot password",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "rememberedPassword": "Remembered your password?"
+  },
+  "home": {},
+  "contests": {
+    "name": "Title",
+    "description": "Description",
+    "password": "Password",
+    "startTime": "Start time",
+    "endTime": "End time",
+    "tooEarly": "End time is too early",
+    "rule": "Rule",
+    "isVisible": "visible"
+  },
+  "problems": {
+    "name": "Title",
+    "timeLimit": "Time limit",
+    "memoryLimit": "Memory limit",
+    "description": "Description",
+    "input": "Input",
+    "output": "Output",
+    "samples": "Samples",
+    "sampleInput": "Sample input",
+    "sampleOutput": "Sample output",
+    "hint": "Hint",
+    "source": "Source",
+    "tags": "Tags",
+    "isVisible": "Visible",
+    "allowedLanguages": "Allowed languages",
+    "rule": "Rule"
+  },
+  "problemSets": {
+    "name": "Title",
+    "description": "Description"
+  },
+  "submissions": {},
+  "discussion": {},
+  "groups": {
+    "name": "Name",
+    "description": "Introduction",
+    "creator": "Creator"
+  },
+  "users": {
+    "myInfo": "My Info",
+    "explore": "Explore"
+  },
+  "comments": {
+    "comment": "Comment",
+    "cancel": "Cancel",
+    "show": "Show",
+    "hide": "Hide",
+    "reply": "reply"
+  },
+  "wiki": {}
+}
+
