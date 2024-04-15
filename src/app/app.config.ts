@@ -4,7 +4,12 @@ import {
   APP_INITIALIZER,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import {
+  HttpClient,
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import {
   TranslateModule,
   TranslateLoader,
@@ -14,6 +19,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
+import { apiInterceptor } from './core/interceptors/api.interceptor';
 import { environment } from '../environments/environment';
 
 export function appInitializerFactory(
@@ -51,7 +57,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([apiInterceptor])),
     importProvidersFrom([
       //HttpClientModule,
       TranslateModule.forRoot(provideTranslation()),
